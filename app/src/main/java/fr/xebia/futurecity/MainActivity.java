@@ -1,5 +1,9 @@
 package fr.xebia.futurecity;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +42,8 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_line_3)
     public void onBntLine3Clicked(View view) {
-        dir1.setText(getText(R.string.dir_pont_bezon));
-        dir2.setText(getText(R.string.dir_gambetta));
+        dir1.setText(getText(R.string.dir_3_pont_bezon));
+        dir2.setText(getText(R.string.dir_3_gambetta));
         transitionView2ToView3();
     }
 
@@ -102,5 +106,14 @@ public class MainActivity extends BaseActivity {
         view4.setVisibility(View.VISIBLE);
         view1.startAnimation(rightToLeftExit);
         view4.startAnimation(rightToLeftEnter);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @OnClick({R.id.direction_1, R.id.direction_2,
+            R.id.exit_1, R.id.exit_2, R.id.exit_3, R.id.exit_4})
+    public void onStartNavigation(View view) {
+        startActivity(new Intent(this, NavigationActivity.class),
+                ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+        );
     }
 }

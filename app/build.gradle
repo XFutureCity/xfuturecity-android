@@ -24,6 +24,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'main/AndroidManifest.xml'
+    }
 }
 
 ext.supportLibVersion = '23.2.1'
@@ -31,6 +35,7 @@ ext.permissionDispatcherVersion = '2.0.8'
 ext.altbeaconVersion = '2.7'
 
 dependencies {
+
     compile "com.android.support:appcompat-v7:$supportLibVersion"
     compile "com.android.support:design:$supportLibVersion"
 
@@ -43,11 +48,8 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.1'
     compile 'io.reactivex:rxandroid:1.1.0'
 
+//    compile 'com.kontaktio.sdk:kontakt-sdk:2.1.2'
     compile "org.altbeacon:android-beacon-library:$altbeaconVersion"
-
-    // permission
-    compile "com.github.hotchemi:permissionsdispatcher:$permissionDispatcherVersion"
-    apt "com.github.hotchemi:permissionsdispatcher-processor:$permissionDispatcherVersion"
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
