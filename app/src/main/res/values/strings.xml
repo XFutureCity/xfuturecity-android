@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">FutureCity</string>
+    <string name="take_metro_line">Metro</string>
+    <string name="get_out">Exit</string>
+    <string name="line_3">Line 3</string>
+    <string name="line_7">Line 7</string>
+    <string name="line_8">Line 8</string>
+    <string name="dir_gambetta">Gambetta</string>
+    <string name="dir_pont_bezon">Pont de Levallois</string>
+    <string name="dir_7_north">La Courneuve</string>
+    <string name="dir_7_south">Mairie d\'Ivry / Villejuif</string>
+    <string name="dir_8_balard">Balard</string>
+    <string name="dir_8_creteil">Créteil</string>
+    <string name="exit_1">Exit 1</string>
+    <string name="exit_2">Exit 2</string>
+    <string name="exit_3">Exit 3</string>
+    <string name="exit_4">Exit 4</string>
 </resources>
