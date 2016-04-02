@@ -2,11 +2,14 @@ package fr.xebia.futurecity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +25,8 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
+import fr.xebia.futurecity.compass.CompassView;
+import fr.xebia.futurecity.model.Position;
 
 public class NavigationActivity extends BaseActivity implements BeaconConsumer {
 
@@ -35,14 +40,24 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
     private BeaconListAdapter adapter;
     List<Beacon> targetBeacons = new ArrayList<>();
 
+    private LocationManager locationManager;
+    private Location userLocation;
+    private Location originObjectLocation;
+
     @Bind(R.id.destination) TextView destination;
     @Bind(R.id.device_list) ListView beaconList;
     @Bind(R.id.beacon_state) TextView beaconState;
+    @Bind(R.id.beacon_previous) TextView previousBeacon;
+    @Bind(R.id.beacon_next) TextView nextBeacon;
+
+    @Bind(R.id.compassView) CompassView compassView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         // Configure device beaconList
         adapter = new BeaconListAdapter(this);
@@ -57,7 +72,8 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
     private void checkPermissionAndStart() {
         int checkSelfPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
         if (PackageManager.PERMISSION_GRANTED == checkSelfPermissionResult) {
-            startScan();
+            startRanging();
+//            startMonitoring();
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 //we should show some explanation for user here
@@ -74,23 +90,59 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (100 == requestCode) {
                 //same request code as was in request permission
-                startScan();
+                startRanging();
             }
-
         } else {
             //not granted permission
             //show some explanation dialog that some features will not work
         }
     }
 
-    private void startScan() {
+    private void startRanging() {
         beaconManager.setRangeNotifier((beacons, region) -> runOnUiThread(() -> {
-            targetBeacons.clear();
+//            targetBeacons.clear();
             for (Beacon b : beacons) {
                 if (b.getId1().equals(Identifier.parse(XEBIA_KONTACT_IO_UUID))) {
-                    targetBeacons.add(b);
+                    if (targetBeacons.size() == 0) {
+                        targetBeacons.add(b);
+                    } else {
+                        boolean shouldAdd = true;
+                        int indexToReplace = 0;
+                        for (int i = 0; i < targetBeacons.size(); i++) {
+                            if (b.getId2().equals(targetBeacons.get(i).getId2())) {
+                                shouldAdd = false;
+                                indexToReplace = i;
+                            }
+                        }
+                        if (!shouldAdd) {
+                            Log.d(TAG, "Replaced");
+                            targetBeacons.remove(indexToReplace);
+                        }
+                        targetBeacons.add(b);
+                    }
                 }
+            }
+            Collections.sort(targetBeacons, (o1, o2) -> ((Integer) o2.getRssi()).compareTo(o1.getRssi()));
+            if (targetBeacons.size() != 0) {
+                Beacon currentBeacon = targetBeacons.get(0);
+                Position currentPosition = Position.getPositionByMajor(currentBeacon.getId2().toInt());
 
+                if (currentPosition != null) {
+                    beaconState.setText("Current: " + currentPosition.name());
+                    Integer previousPositionMajor = currentPosition.getPreviousPosition();
+                    Integer nextPositionMajor = currentPosition.getNextPosition();
+                    if (previousPositionMajor != null) {
+                        previousBeacon.setText("Previous: " + Position.getPositionByMajor(previousPositionMajor).name());
+                    } else {
+                        previousBeacon.setText("None");
+                    }
+                    if (nextPositionMajor != null) {
+                        nextBeacon.setText("Next: " + Position.getPositionByMajor(nextPositionMajor).name());
+                    } else {
+                        nextBeacon.setText("None");
+                    }
+                    setCompass(currentPosition.getAngleWithNext());
+                }
             }
             adapter.replaceWith(targetBeacons);
         }));
@@ -99,6 +151,18 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
         } catch (RemoteException e) {
             // void implementation
         }
+    }
+
+    private void setCompass(Integer angleWithNext) {
+        userLocation = getBestLastKnowLocation(locationManager);
+//        originObjectLocation = getBestLastKnowLocation(locationManager);
+//        if (userLocation != null && originObjectLocation != null) {
+        if (angleWithNext != null) {
+            compassView.initializeCompass(userLocation, angleWithNext - azimuth, R.drawable.ic_navigation_white_48dp);
+        } else {
+            compassView.initializeCompass(userLocation, 0, R.drawable.ic_navigation_white_48dp);
+        }
+//        }
     }
 
     @Override
@@ -126,7 +190,17 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
 
     @Override
     public void onBeaconServiceConnect() {
-        beaconState.setText(R.string.beacon_state_scanning);
         checkPermissionAndStart();
+    }
+
+    private Location getBestLastKnowLocation(LocationManager locationManager) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location == null)
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location == null) location = new Location("");
+            return location;
+        }
+        return null;
     }
 }

@@ -9,4 +9,5 @@
     <dimen name="button_margin">10dp</dimen>
     <dimen name="circle_button_size">42dp</dimen>
     <dimen name="line_view_vertical_margin">20dp</dimen>
+    <dimen name="compass_size">200dp</dimen>
 </resources>

@@ -28,6 +28,38 @@
         android:text="@string/beacon_state_none"
         android:textColor="@android:color/white"/>
 
+    <TextView
+        android:id="@+id/beacon_previous"
+        style="@style/CommonTextSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#333333"
+        android:padding="10dp"
+        android:text="@string/beacon_state_none"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/beacon_next"
+        style="@style/CommonTextSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:padding="10dp"
+        android:text="@string/beacon_state_none"
+        android:textColor="@android:color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <fr.xebia.futurecity.compass.CompassView
+            android:id="@+id/compassView"
+            android:layout_width="@dimen/compass_size"
+            android:layout_height="@dimen/compass_size"
+            android:layout_centerInParent="true"
+            android:background="@drawable/circle"/>
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/device_list"
         android:layout_width="match_parent"
