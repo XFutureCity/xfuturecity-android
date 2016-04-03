@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">FutureCity</string>
-    <string name="take_metro_line">Metro</string>
+    <string name="take_metro_line">Line</string>
     <string name="get_out">Exit</string>
+    <string name="line">Line</string>
     <string name="line_3">Line 3</string>
     <string name="line_7">Line 7</string>
     <string name="line_8">Line 8</string>

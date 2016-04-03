@@ -11,19 +11,21 @@
 
     <TextView
         android:id="@+id/direction_1"
-        style="@style/CommonText"
+        style="@style/CommonTextRATP"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/line_view_vertical_margin"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="90dp"
         android:layout_weight="4"
         android:text="@string/dir_3_gambetta"/>
 
     <TextView
         android:id="@+id/direction_2"
-        style="@style/CommonText"
+        style="@style/CommonTextRATP"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/line_view_vertical_margin"
+        android:layout_margin="30dp"
         android:layout_weight="4"
         android:text="@string/dir_3_pont_bezon"/>
 
@@ -43,7 +45,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/circle"
-            android:src="@drawable/ic_arrow_forward_white_24dp"/>
+            android:background="@drawable/circle_black"
+            android:src="@drawable/ic_chevron_right_white_48dp"/>
     </RelativeLayout>
 </LinearLayout>

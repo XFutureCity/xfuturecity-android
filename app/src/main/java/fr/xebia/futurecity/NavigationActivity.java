@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.altbeacon.beacon.Beacon;
@@ -31,6 +30,7 @@ import fr.xebia.futurecity.model.Position;
 public class NavigationActivity extends BaseActivity implements BeaconConsumer {
 
     private static final String TAG = "NavigationActivity";
+    public static final String STATION_NAME = "STATION_NAME";
 
     private static final String XEBIA_KONTACT_IO_UUID = "37e6a92a-f8ce-11e5-9ce9-5e5517507c66";
     private static final Region ALL_BEACONS_REGION = new Region(XEBIA_KONTACT_IO_UUID, null, null, null);
@@ -42,11 +42,10 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
 
     private LocationManager locationManager;
     private Location userLocation;
-    private Location originObjectLocation;
 
     @Bind(R.id.destination) TextView destination;
-    @Bind(R.id.device_list) ListView beaconList;
-    @Bind(R.id.beacon_state) TextView beaconState;
+    //    @Bind(R.id.device_list) ListView beaconList;
+    @Bind(R.id.beacon_current) TextView beaconState;
     @Bind(R.id.beacon_previous) TextView previousBeacon;
     @Bind(R.id.beacon_next) TextView nextBeacon;
 
@@ -57,11 +56,12 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
+        destination.setText(getIntent().getStringExtra(STATION_NAME));
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         // Configure device beaconList
         adapter = new BeaconListAdapter(this);
-        beaconList.setAdapter(adapter);
+//        beaconList.setAdapter(adapter);
 
         // Configure BeaconManager
         beaconManager = BeaconManager.getInstanceForApplication(this);
@@ -128,18 +128,18 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
                 Position currentPosition = Position.getPositionByMajor(currentBeacon.getId2().toInt());
 
                 if (currentPosition != null) {
-                    beaconState.setText("Current: " + currentPosition.name());
+                    beaconState.setText("Current\n" + currentPosition.name());
                     Integer previousPositionMajor = currentPosition.getPreviousPosition();
                     Integer nextPositionMajor = currentPosition.getNextPosition();
                     if (previousPositionMajor != null) {
-                        previousBeacon.setText("Previous: " + Position.getPositionByMajor(previousPositionMajor).name());
+                        previousBeacon.setText("Previous\n" + Position.getPositionByMajor(previousPositionMajor).name());
                     } else {
-                        previousBeacon.setText("None");
+                        previousBeacon.setText("None\n");
                     }
                     if (nextPositionMajor != null) {
-                        nextBeacon.setText("Next: " + Position.getPositionByMajor(nextPositionMajor).name());
+                        nextBeacon.setText("Next\n" + Position.getPositionByMajor(nextPositionMajor).name());
                     } else {
-                        nextBeacon.setText("None");
+                        nextBeacon.setText("None\n");
                     }
                     setCompass(currentPosition.getAngleWithNext());
                 }
@@ -155,14 +155,11 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
 
     private void setCompass(Integer angleWithNext) {
         userLocation = getBestLastKnowLocation(locationManager);
-//        originObjectLocation = getBestLastKnowLocation(locationManager);
-//        if (userLocation != null && originObjectLocation != null) {
         if (angleWithNext != null) {
             compassView.initializeCompass(userLocation, angleWithNext - azimuth, R.drawable.ic_navigation_white_48dp);
         } else {
             compassView.initializeCompass(userLocation, 0, R.drawable.ic_navigation_white_48dp);
         }
-//        }
     }
 
     @Override

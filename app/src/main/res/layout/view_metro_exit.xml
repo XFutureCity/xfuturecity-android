@@ -8,19 +8,25 @@
 
     <TextView
         android:id="@+id/take_a_metro"
-        style="@style/CommonText"
+        style="@style/CommonTextRATP"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
         android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_directions_subway_white_48dp"
+        android:drawableStart="@drawable/ic_directions_subway_white_48dp"
         android:text="@string/take_metro_line"/>
 
     <TextView
         android:id="@+id/get_out"
-        style="@style/CommonText"
+        style="@style/CommonTextRATP"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
         android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_exit_to_app_white_48dp"
+        android:drawableStart="@drawable/ic_exit_to_app_white_48dp"
         android:text="@string/get_out"/>
 </LinearLayout>

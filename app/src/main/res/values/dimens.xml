@@ -4,10 +4,18 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="button_text_size_big">48sp</dimen>
+    <dimen name="button_text_size_medium">36sp</dimen>
     <dimen name="button_text_size_small">24sp</dimen>
 
     <dimen name="button_margin">10dp</dimen>
-    <dimen name="circle_button_size">42dp</dimen>
+    <dimen name="circle_button_size">52dp</dimen>
+
     <dimen name="line_view_vertical_margin">20dp</dimen>
-    <dimen name="compass_size">200dp</dimen>
+    <dimen name="line_view_vertical_margin_large">70dp</dimen>
+    <dimen name="compass_size">240dp</dimen>
+    <dimen name="circle_line_sign">24dp</dimen>
+
+    <dimen name="line_text_vertical_margin">7dp</dimen>
+    <dimen name="line_number_size">56dp</dimen>
+    <dimen name="exit_drawable_padding">7dp</dimen>
 </resources>

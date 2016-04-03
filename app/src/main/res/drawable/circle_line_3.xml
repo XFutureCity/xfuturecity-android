@@ -4,9 +4,9 @@
     android:shape="oval">
 
     <solid
-        android:color="@android:color/black"/>
+        android:color="@color/line_3"/>
 
     <size
-        android:width="@dimen/circle_button_size"
-        android:height="@dimen/circle_button_size"/>
+        android:width="@dimen/circle_line_sign"
+        android:height="@dimen/circle_line_sign"/>
 </shape>

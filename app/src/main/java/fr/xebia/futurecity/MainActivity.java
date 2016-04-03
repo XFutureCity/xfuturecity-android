@@ -112,8 +112,10 @@ public class MainActivity extends BaseActivity {
     @OnClick({R.id.direction_1, R.id.direction_2,
             R.id.exit_1, R.id.exit_2, R.id.exit_3, R.id.exit_4})
     public void onStartNavigation(View view) {
-        startActivity(new Intent(this, NavigationActivity.class),
-                ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-        );
+        String stationName = (String) ((TextView) view).getText();
+        Intent i = new Intent(this, NavigationActivity.class);
+        i.putExtra(NavigationActivity.STATION_NAME, stationName);
+        startActivity(i, ActivityOptions.
+                makeSceneTransitionAnimation(this).toBundle());
     }
 }

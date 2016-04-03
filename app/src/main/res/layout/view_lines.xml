@@ -9,34 +9,112 @@
     android:visibility="gone"
     tools:visibility="visible">
 
-    <TextView
-        android:id="@+id/btn_line_3"
-        style="@style/CommonText"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/line_view_vertical_margin"
-        android:layout_weight="3"
-        android:text="@string/line_3"/>
+        android:layout_weight="3">
 
-    <TextView
-        android:id="@+id/btn_line_7"
-        style="@style/CommonText"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/btn_line_3"
+                style="@style/CommonText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/line_text_vertical_margin"
+                android:layout_marginRight="@dimen/line_text_vertical_margin"
+                android:text="@string/line"/>
+
+            <TextView
+                style="@style/CommonTextMedium"
+                android:layout_width="@dimen/line_number_size"
+                android:layout_height="@dimen/line_number_size"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/btn_line_3"
+                android:layout_toRightOf="@+id/btn_line_3"
+                android:background="@drawable/circle_line_3"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@android:color/white"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/line_view_vertical_margin"
-        android:layout_weight="3"
-        android:text="@string/line_7"/>
+        android:layout_weight="3">
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/btn_line_8"
-        style="@style/CommonText"
+            <TextView
+                android:id="@+id/btn_line_7"
+                style="@style/CommonText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/line_text_vertical_margin"
+                android:layout_marginRight="@dimen/line_text_vertical_margin"
+                android:text="@string/line"/>
+
+            <TextView
+                style="@style/CommonTextMedium"
+                android:layout_width="@dimen/line_number_size"
+                android:layout_height="@dimen/line_number_size"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/btn_line_7"
+                android:layout_toRightOf="@+id/btn_line_7"
+                android:background="@drawable/circle_line_7"
+                android:gravity="center"
+                android:text="7"
+                android:textColor="@android:color/white"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="center"
         android:layout_marginTop="@dimen/line_view_vertical_margin"
-        android:layout_weight="3"
-        android:text="@string/line_8"/>
+        android:layout_weight="3">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/btn_line_8"
+                style="@style/CommonText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/line_text_vertical_margin"
+                android:layout_marginRight="@dimen/line_text_vertical_margin"
+                android:text="@string/line"/>
+
+            <TextView
+                style="@style/CommonTextMedium"
+                android:layout_width="@dimen/line_number_size"
+                android:layout_height="@dimen/line_number_size"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/btn_line_8"
+                android:layout_toRightOf="@+id/btn_line_8"
+                android:background="@drawable/circle_line_8"
+                android:gravity="center"
+                android:text="8"/>
+
+        </RelativeLayout>
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,7 +132,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/circle"
-            android:src="@drawable/ic_arrow_forward_white_24dp"/>
+            android:background="@drawable/circle_black"
+            android:src="@drawable/ic_chevron_right_white_48dp"/>
     </RelativeLayout>
 </LinearLayout>
