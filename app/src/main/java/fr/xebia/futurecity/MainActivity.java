@@ -29,6 +29,8 @@ public class MainActivity extends BaseActivity {
     Animation leftToRightEnter;
     Animation leftToRightExit;
 
+    int lineNumber = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class MainActivity extends BaseActivity {
         dir1.setText(getText(R.string.dir_3_pont_bezon));
         dir2.setText(getText(R.string.dir_3_gambetta));
         transitionView2ToView3();
+        lineNumber = 3;
     }
 
     @OnClick(R.id.btn_line_7)
@@ -52,6 +55,7 @@ public class MainActivity extends BaseActivity {
         dir1.setText(getText(R.string.dir_7_north));
         dir2.setText(getText(R.string.dir_7_south));
         transitionView2ToView3();
+        lineNumber = 7;
     }
 
     @OnClick(R.id.btn_line_8)
@@ -59,6 +63,7 @@ public class MainActivity extends BaseActivity {
         dir1.setText(getText(R.string.dir_8_balard));
         dir2.setText(getText(R.string.dir_8_creteil));
         transitionView2ToView3();
+        lineNumber = 8;
     }
 
     private void transitionView2ToView3() {
@@ -114,6 +119,7 @@ public class MainActivity extends BaseActivity {
     public void onStartNavigation(View view) {
         String stationName = (String) ((TextView) view).getText();
         Intent i = new Intent(this, NavigationActivity.class);
+        i.putExtra(NavigationActivity.LINE_NUMBER, lineNumber);
         i.putExtra(NavigationActivity.STATION_NAME, stationName);
         startActivity(i, ActivityOptions.
                 makeSceneTransitionAnimation(this).toBundle());

@@ -31,6 +31,7 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
 
     private static final String TAG = "NavigationActivity";
     public static final String STATION_NAME = "STATION_NAME";
+    public static final String LINE_NUMBER = "LINE_NUMBER";
 
     private static final String XEBIA_KONTACT_IO_UUID = "37e6a92a-f8ce-11e5-9ce9-5e5517507c66";
     private static final Region ALL_BEACONS_REGION = new Region(XEBIA_KONTACT_IO_UUID, null, null, null);
@@ -48,7 +49,6 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
     @Bind(R.id.beacon_current) TextView beaconState;
     @Bind(R.id.beacon_previous) TextView previousBeacon;
     @Bind(R.id.beacon_next) TextView nextBeacon;
-
     @Bind(R.id.compassView) CompassView compassView;
 
     @Override
@@ -57,6 +57,24 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
         setContentView(R.layout.activity_navigation);
 
         destination.setText(getIntent().getStringExtra(STATION_NAME));
+        int lineNumber = getIntent().getIntExtra(LINE_NUMBER, 0);
+        if (lineNumber == 3) {
+            previousBeacon.setBackgroundColor(getResources().getColor(R.color.line_3_light));
+            beaconState.setBackgroundColor(getResources().getColor(R.color.line_3));
+            nextBeacon.setBackgroundColor(getResources().getColor(R.color.line_3_light));
+        } else if (lineNumber == 7) {
+            previousBeacon.setBackgroundColor(getResources().getColor(R.color.line_7_light));
+            beaconState.setBackgroundColor(getResources().getColor(R.color.line_7));
+            nextBeacon.setBackgroundColor(getResources().getColor(R.color.line_7_light));
+        } else if (lineNumber == 8) {
+            previousBeacon.setBackgroundColor(getResources().getColor(R.color.line_8_light));
+            beaconState.setBackgroundColor(getResources().getColor(R.color.line_8));
+            nextBeacon.setBackgroundColor(getResources().getColor(R.color.line_8_light));
+        } else {
+            previousBeacon.setBackgroundColor(getResources().getColor(R.color.grey_light));
+            beaconState.setBackgroundColor(getResources().getColor(R.color.grey));
+            nextBeacon.setBackgroundColor(getResources().getColor(R.color.grey_light));
+        }
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         // Configure device beaconList
@@ -134,14 +152,16 @@ public class NavigationActivity extends BaseActivity implements BeaconConsumer {
                     if (previousPositionMajor != null) {
                         previousBeacon.setText("Previous\n" + Position.getPositionByMajor(previousPositionMajor).name());
                     } else {
-                        previousBeacon.setText("None\n");
+                        previousBeacon.setText("Previous\nNone");
                     }
                     if (nextPositionMajor != null) {
                         nextBeacon.setText("Next\n" + Position.getPositionByMajor(nextPositionMajor).name());
                     } else {
-                        nextBeacon.setText("None\n");
+                        nextBeacon.setText("Nex\nNone");
                     }
                     setCompass(currentPosition.getAngleWithNext());
+                } else {
+                    beaconState.setText("Current\nNone");
                 }
             }
             adapter.replaceWith(targetBeacons);

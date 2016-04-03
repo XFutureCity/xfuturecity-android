@@ -2,12 +2,20 @@
 <resources>
     <color name="colorPrimary">#101010</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#E06666</color>
+    <color name="colorAccent">#C2185B</color>
     <color name="activity_bg">#F3F3F3</color>
     <color name="activity_bg_metro">#D0D0D0</color>
     <color name="line_3">#9f9719</color>
+    <color name="line_3_light">#c89f9719</color>
+
     <color name="line_7">#f2a4b7</color>
+    <color name="line_7_light">#c8f2a4b7</color>
+
     <color name="line_8">#cdaccf</color>
+    <color name="line_8_light">#c8cdaccf</color>
+
     <color name="ratp_blue">#16499f</color>
-    <color name="grey">#AAAAAA</color>
+    <color name="grey">#a5a5a5</color>
+    <color name="grey_light">#d3d3d3</color>
+    <color name="colorAccentLight">#F06292</color>
 </resources>

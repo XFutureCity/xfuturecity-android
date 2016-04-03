@@ -12,10 +12,11 @@
 
     <dimen name="line_view_vertical_margin">20dp</dimen>
     <dimen name="line_view_vertical_margin_large">70dp</dimen>
-    <dimen name="compass_size">240dp</dimen>
+    <dimen name="compass_size">280dp</dimen>
     <dimen name="circle_line_sign">24dp</dimen>
 
     <dimen name="line_text_vertical_margin">7dp</dimen>
     <dimen name="line_number_size">56dp</dimen>
     <dimen name="exit_drawable_padding">7dp</dimen>
+    <dimen name="nav_point_padding">10dp</dimen>
 </resources>
